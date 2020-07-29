@@ -2,21 +2,21 @@ namespace RefactortingTennisGame2
 {
     public class Player
     {
-        public string Name;
+        public readonly string Name;
         public int Point;
 
         public string Result => Point >= 4 ? Score[3] : Score[Point];
 
         private static readonly string[] Score = {"Love", "Fifteen", "Thirty", "Forty"};
-        public Player(string Name)
+        public Player(string name)
         {
-            this.Name = Name;
+            Name = name;
             Point = 0;
         }
 
         public override int GetHashCode()
         {
-            return Point;
+            return Point.GetHashCode();
         }
 
         public override bool Equals(object? obj)
@@ -28,6 +28,16 @@ namespace RefactortingTennisGame2
             }
 
             return another.Point == Point;
+        }
+
+        public bool MathPoint()
+        {
+            return Point >= 3;
+        }
+
+        public bool WinPoint()
+        {
+            return Point >= 4;
         }
     }
 }

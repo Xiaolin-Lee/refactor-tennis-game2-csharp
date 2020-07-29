@@ -4,6 +4,7 @@ namespace RefactortingTennisGame2
 {
     public class TennisGameImpl : ITennisGame
     {
+        private static int GAME_POINT = 3;
         private Player player1;
         private Player player2;
 
@@ -16,21 +17,26 @@ namespace RefactortingTennisGame2
         public string GetScore()
         {
             string score = "";
-            if (player1.Point == player2.Point && player1.Point < 4)
+            if (player1.Equals(player2))
             {
-                score = player1.Result;
-                score += "-All";
+                if (!player1.MathPoint())
+                {
+                    score = player1.Result;
+                    score += "-All";
+                }
+
+                if (player1.MathPoint())
+                {
+                    score = "Deuce";
+                }
             }
 
-            if (player1.Point == player2.Point && player1.Point >= 3)
-                score = "Deuce";
-
-            if (!player1.Equals(player2) && Winner().Point < 4)
+            if (!player1.Equals(player2) && !Winner().WinPoint())
             {
                 score = player1.Result + "-" + player2.Result;
             }
 
-            if (!player1.Equals(player2) && CurrentLoser().Point >= 3)
+            if (!player1.Equals(player2) && CurrentLoser().MathPoint())
             {
                 score = $"Advantage {Winner().Name}";
             }
@@ -45,7 +51,7 @@ namespace RefactortingTennisGame2
 
         private bool HasWinner()
         {
-            return (player1.Point >= 4 || player2.Point >= 4) && Math.Abs(player1.Point - player2.Point) >= 2;
+            return (player1.WinPoint() || player2.WinPoint()) && Math.Abs(player1.Point - player2.Point) >= 2;
         }
 
         private Player Winner()
@@ -74,12 +80,12 @@ namespace RefactortingTennisGame2
             }
         }
 
-        public void P1Score()
+        private void P1Score()
         {
             player1.Point++;
         }
 
-        public void P2Score()
+        private void P2Score()
         {
             player2.Point++;
         }
