@@ -16,12 +16,7 @@ namespace RefactortingTennisGame2
             string score = "";
             if (player1.Point == player2.Point && player1.Point < 4)
             {
-                if (player1.Point == 0)
-                    score = "Love";
-                if (player1.Point == 1)
-                    score = "Fifteen";
-                if (player1.Point == 2)
-                    score = "Thirty";
+                score = player1.Result;
                 score += "-All";
             }
 
@@ -30,53 +25,21 @@ namespace RefactortingTennisGame2
 
             if (player1.Point > 0 && player2.Point == 0)
             {
-                if (player1.Point == 1)
-                    player1.Result = "Fifteen";
-                if (player1.Point == 2)
-                    player1.Result = "Thirty";
-                if (player1.Point == 3)
-                    player1.Result = "Forty";
-
-                player2.Result = "Love";
                 score = player1.Result + "-" + player2.Result;
             }
 
             if (player2.Point > 0 && player1.Point == 0)
             {
-                if (player2.Point == 1)
-                    player2.Result = "Fifteen";
-                if (player2.Point == 2)
-                    player2.Result = "Thirty";
-                if (player2.Point == 3)
-                    player2.Result = "Forty";
-
-                player1.Result = "Love";
                 score = player1.Result + "-" + player2.Result;
             }
 
             if (player1.Point > player2.Point && player1.Point < 4)
             {
-                if (player1.Point == 2)
-                    player1.Result = "Thirty";
-                if (player1.Point == 3)
-                    player1.Result = "Forty";
-                if (player2.Point == 1)
-                    player2.Result = "Fifteen";
-                if (player2.Point == 2)
-                    player2.Result = "Thirty";
                 score = player1.Result + "-" + player2.Result;
             }
 
             if (player2.Point > player1.Point && player2.Point < 4)
             {
-                if (player2.Point == 2)
-                    player2.Result = "Thirty";
-                if (player2.Point == 3)
-                    player2.Result = "Forty";
-                if (player1.Point == 1)
-                    player1.Result = "Fifteen";
-                if (player1.Point == 2)
-                    player1.Result = "Thirty";
                 score = player1.Result + "-" + player2.Result;
             }
 
