@@ -4,7 +4,6 @@ namespace RefactortingTennisGame2
 {
     public class TennisGameImpl : ITennisGame
     {
-        private static int GAME_POINT = 3;
         private Player player1;
         private Player player2;
 
@@ -16,37 +15,35 @@ namespace RefactortingTennisGame2
 
         public string GetScore()
         {
-            string score = "";
             if (player1.Equals(player2))
             {
                 if (!player1.MathPoint())
                 {
-                    score = player1.Result;
-                    score += "-All";
+                    return $"{player1.Result}-All";
                 }
 
                 if (player1.MathPoint())
                 {
-                    score = "Deuce";
+                    return "Deuce";
                 }
             }
 
             if (!player1.Equals(player2) && !Winner().WinPoint())
             {
-                score = player1.Result + "-" + player2.Result;
-            }
-
-            if (!player1.Equals(player2) && CurrentLoser().MathPoint())
-            {
-                score = $"Advantage {Winner().Name}";
+                return $"{player1.Result}-{player2.Result}";
             }
 
             if (HasWinner())
             {
-                score = $"Win for {Winner().Name}";
+                return $"Win for {Winner().Name}";
+            }
+            
+            if (!player1.Equals(player2) && CurrentLoser().MathPoint())
+            {
+                return $"Advantage {Winner().Name}";
             }
 
-            return score;
+            return "";
         }
 
         private bool HasWinner()
