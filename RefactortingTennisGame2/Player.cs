@@ -30,7 +30,7 @@ namespace RefactortingTennisGame2
             return another.Point == Point;
         }
 
-        public bool MathPoint()
+        public bool MatchPoint()
         {
             return Point >= 3;
         }

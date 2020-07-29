@@ -15,40 +15,30 @@ namespace RefactortingTennisGame2
 
         public string GetScore()
         {
-            if (player1.Equals(player2))
-            {
-                if (!player1.MathPoint())
-                {
-                    return $"{player1.Result}-All";
-                }
-
-                if (player1.MathPoint())
-                {
-                    return "Deuce";
-                }
-            }
-
-            if (!player1.Equals(player2) && !Winner().WinPoint())
-            {
-                return $"{player1.Result}-{player2.Result}";
-            }
-
             if (HasWinner())
             {
                 return $"Win for {Winner().Name}";
             }
             
-            if (!player1.Equals(player2) && CurrentLoser().MathPoint())
+            if (player1.Equals(player2))
             {
-                return $"Advantage {Winner().Name}";
+                return player1.MatchPoint() ? "Deuce" : $"{player1.Result}-All";
             }
 
+            if (!player1.Equals(player2))
+            {
+                return Winner().WinPoint()
+                    ? Loser().MatchPoint() ? 
+                        $"Advantage {Winner().Name}"
+                        : ""
+                    : $"{player1.Result}-{player2.Result}";
+            }
             return "";
         }
 
         private bool HasWinner()
         {
-            return (player1.WinPoint() || player2.WinPoint()) && Math.Abs(player1.Point - player2.Point) >= 2;
+            return Winner().WinPoint() && Math.Abs(player1.Point - player2.Point) >= 2;
         }
 
         private Player Winner()
@@ -56,7 +46,7 @@ namespace RefactortingTennisGame2
             return player1.Point > player2.Point ? player1 : player2;
         }
 
-        private Player CurrentLoser()
+        private Player Loser()
         {
             return player1.Point > player2.Point ? player2 : player1;
         }
