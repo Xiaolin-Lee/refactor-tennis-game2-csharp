@@ -1,8 +1,8 @@
 namespace RefactortingTennisGame2
 {
-    class Player
+    public class Player
     {
-        private string Name;
+        public string Name;
         public int Point;
 
         public string Result => Point >= 4 ? Score[3] : Score[Point];
@@ -12,6 +12,22 @@ namespace RefactortingTennisGame2
         {
             this.Name = Name;
             Point = 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Point;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Player;
+            if (another == null)
+            {
+                return false;
+            }
+
+            return another.Point == Point;
         }
     }
 }

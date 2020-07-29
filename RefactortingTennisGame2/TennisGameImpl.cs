@@ -1,3 +1,5 @@
+using System;
+
 namespace RefactortingTennisGame2
 {
     public class TennisGameImpl : ITennisGame
@@ -23,49 +25,39 @@ namespace RefactortingTennisGame2
             if (player1.Point == player2.Point && player1.Point >= 3)
                 score = "Deuce";
 
-            if (player1.Point > 0 && player2.Point == 0)
+            if (!player1.Equals(player2) && Winner().Point < 4)
             {
                 score = player1.Result + "-" + player2.Result;
             }
 
-            if (player2.Point > 0 && player1.Point == 0)
+            if (!player1.Equals(player2) && CurrentLoser().Point >= 3)
             {
-                score = player1.Result + "-" + player2.Result;
+                score = $"Advantage {Winner().Name}";
             }
 
-            if (player1.Point > player2.Point && player1.Point < 4)
+            if (HasWinner())
             {
-                score = player1.Result + "-" + player2.Result;
-            }
-
-            if (player2.Point > player1.Point && player2.Point < 4)
-            {
-                score = player1.Result + "-" + player2.Result;
-            }
-
-            if (player1.Point > player2.Point && player2.Point >= 3)
-            {
-                score = "Advantage player1";
-            }
-
-            if (player2.Point > player1.Point && player1.Point >= 3)
-            {
-                score = "Advantage player2";
-            }
-
-            if (player1.Point >= 4 && player2.Point >= 0 && (player1.Point - player2.Point) >= 2)
-            {
-                score = "Win for player1";
-            }
-
-            if (player2.Point >= 4 && player1.Point >= 0 && (player2.Point - player1.Point) >= 2)
-            {
-                score = "Win for player2";
+                score = $"Win for {Winner().Name}";
             }
 
             return score;
         }
 
+        private bool HasWinner()
+        {
+            return (player1.Point >= 4 || player2.Point >= 4) && Math.Abs(player1.Point - player2.Point) >= 2;
+        }
+
+        private Player Winner()
+        {
+            return player1.Point > player2.Point ? player1 : player2;
+        }
+
+        private Player CurrentLoser()
+        {
+            return player1.Point > player2.Point ? player2 : player1;
+        }
+        
         public void SetP1Score(int number)
         {
             for (int i = 0; i < number; i++)
